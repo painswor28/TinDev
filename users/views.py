@@ -1,5 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.views import View
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+
+
 from .forms import RegisterForm, LoginForm
 
 
@@ -30,7 +35,7 @@ class RegisterView(View):
 
         return render(request, self.template_name, {'form': form})
 
-     def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         # will redirect to the home page if a user tries to access the register page while logged in
         if request.user.is_authenticated:
             return redirect(to='/')
