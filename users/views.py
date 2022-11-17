@@ -5,7 +5,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateCandidateForm
 
 
 # Create your views here.
@@ -51,5 +51,18 @@ class CustomLoginView(LoginView):
         return super(CustomLoginView, self).form_valid(form)
 
 @login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+def candidate(request):
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        candidate_form = UpdateCandidateForm(request.POST, request.FILES, instance=request.user.candidate)
+
+        if user_form.is_valid() and candidate_form.is_valid():
+            user_form.save()
+            candidate_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='users-profile')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateCandidateForm(instance=request.user.candidate)
+
+    return render(request, 'users/candidate.html', {'user_form': user_form, 'profile_form': profile_form})

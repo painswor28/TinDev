@@ -14,3 +14,6 @@ class Candidate(models.Model):
     github = models.CharField(max_length=50, blank=True)
     years_of_experience = models.IntegerField()
     education = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.user.username
