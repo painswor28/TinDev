@@ -85,3 +85,7 @@ class UpdateCandidateForm(forms.ModelForm):
     github = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     years_of_experience = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
     education = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Candidate
+        fields = ['profile_bio', 'zip_code', 'list_of_skills', 'github', 'years_of_experience', 'education']

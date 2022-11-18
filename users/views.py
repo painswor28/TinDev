@@ -53,7 +53,7 @@ class CustomLoginView(LoginView):
         return super(CustomLoginView, self).form_valid(form)
 
 @login_required
-def candidate(request):
+def profile(request):
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
         candidate_form = UpdateCandidateForm(request.POST, request.FILES, instance=request.user.candidate)
