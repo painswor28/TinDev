@@ -27,7 +27,7 @@ class RegisterForm(UserCreationForm):
                                                                   'id': 'password',
                                                                   }))
 
-    forms.CharField(max_length=50,
+    password2 = forms.CharField(max_length=50,
                                 required=True,
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password',
                                                                   'class': 'form-control',
@@ -58,7 +58,7 @@ class LoginForm(AuthenticationForm):
         model = User
         fields = ['username', 'password']
 
-class UpdateUserForm(form.ModelForm):
+class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100,
                                required=True,
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -70,8 +70,8 @@ class UpdateUserForm(form.ModelForm):
 
 class UpdateCandidateForm(forms.ModelForm):
     profile_bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
-    zip_code = forms.CharField(widget=forms.TextInput(attrs=={'class': 'form-control'}))
-    list_of_skills = forms.CharField(widget=forms.TextInput(attrs=={'class': 'form-control'}))
-    github = forms.CharField(widget=forms.TextInput(attrs=={'class': 'form-control'}))
-    years_of_experience = forms.IntegerField(widget=forms.NumberInput(attrs=={'class': 'form-control'}))
-    education = forms.CharField(widget=forms.TextInput(attrs=={'class': 'form-control'}))
+    zip_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    list_of_skills = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    github = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    years_of_experience = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    education = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
