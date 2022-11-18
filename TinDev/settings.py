@@ -30,9 +30,6 @@ ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
-AUTH_USER_MODEL = 'users.User'
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+#AUTH_USER_MODEL = 'users.User'
 
 ROOT_URLCONF = 'TinDev.urls'
 

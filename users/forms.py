@@ -1,11 +1,19 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Candidate
+from django.contrib.auth.models import User
+
+
+from .models import Candidate
 
 class RegisterForm(UserCreationForm):
+    ROLE_CHOICES = [
+        ('candidate', 'Candidate'),
+        ('recruiter', 'Recruiter')
+    ]
+
     first_name = forms.CharField(max_length=100,
                                 required=True,
-                                widget=forms.TextInput(attrs={'placeholder': 'Last Name',
+                                widget=forms.TextInput(attrs={'placeholder': 'First Name',
                                                               'class': 'form-control',
                                                               }))
     last_name = forms.CharField(max_length=100,
@@ -15,9 +23,11 @@ class RegisterForm(UserCreationForm):
                                                               }))
     username = forms.CharField(max_length=100,
                                 required=True,
-                                widget=forms.TextInput(attrs={'placeholder': 'Last Name',
+                                widget=forms.TextInput(attrs={'placeholder': 'Username',
                                                               'class': 'form-control',
                                                               }))
+
+    #role = forms.CharField(required=True, widget=forms.Select(choices=ROLE_CHOICES, attrs={'placeholder': 'Role','class': 'form-control',}))
     
     password1 = forms.CharField(max_length=50,
                                 required=True,
