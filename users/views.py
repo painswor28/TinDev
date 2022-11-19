@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.contrib.auth.decorators import login_required
-
 
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateCandidateForm
 
@@ -15,9 +12,10 @@ from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateCandidateForm
 def home(request):
     return render(request, 'users/home.html')
 
+
 class RegisterView(View):
     form_class = RegisterForm
-    initial = {'key':'value'}
+    initial = {'key': 'value'}
     template_name = 'users/register.html'
 
     def get(self, request, *args, **kwargs):
@@ -52,19 +50,21 @@ class CustomLoginView(LoginView):
     def form_valid(self, form):
         return super(CustomLoginView, self).form_valid(form)
 
+
 @login_required
 def profile(request):
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
         candidate_form = UpdateCandidateForm(request.POST, request.FILES, instance=request.user.candidate)
-
+        print("Testing:", user_form.is_valid(), candidate_form.is_valid())
         if user_form.is_valid() and candidate_form.is_valid():
             user_form.save()
             candidate_form.save()
+            print("Success!")
             messages.success(request, 'Your profile is updated successfully')
             return redirect(to='users-profile')
     else:
         user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateCandidateForm(instance=request.user.candidate)
+        candidate_form = UpdateCandidateForm(instance=request.user.candidate)
 
-    return render(request, 'users/candidate.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(request, 'users/candidate.html', {'user_form': user_form, 'profile_form': candidate_form})

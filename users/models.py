@@ -9,7 +9,7 @@ class Candidate(models.Model):
     zip_code = models.CharField(max_length=20)
     skills = models.CharField(max_length=200)
     github = models.CharField(max_length=50, blank=True)
-    years_of_experience = models.IntegerField(null=True)
+    years_of_experience = models.CharField(max_length=2, blank=True)
     education = models.CharField(max_length=200, blank=True)
 
     def __str__(self):

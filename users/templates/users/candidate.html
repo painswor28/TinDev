@@ -4,39 +4,45 @@
     <div class="row my-3 p-3">
         <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }} " style="cursor: pointer;"/>
     </div>
-    {% if user_form.errors %}
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            <div id="form_errors">
-                {% for key, value in user_form.errors.items %}
-                    <strong>{{ value }}</strong>
-                {% endfor %}
-            </div>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    {% endif %}
     <div class="form-content">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-row">
-                <div class="col-md-5">
+                <div class="col-md-8">
                     <div class="form-group">
-                        <label class="small mb-1">Username:</label>
+                        <label class="small mb-1">First Name: *</label>
+                            {{ user_form.first_name }}
+                        <br>
+                        <label class="small mb-1">Last Name: *</label>
+                            {{ user_form.last_name }}
+                        <br>
+                        <label class="small mb-1">Profile Bio:</label>
+                            {{ profile_form.profile_bio }}
+                        <br>
+                        <label class="small mb-1">Zip Code: *</label>
+                            {{ profile_form.zip_code }}
+                        <br>
+                        <label class="small mb-1">Github Username: *</label>
+                            {{ profile_form.github }}
+                        <br>
+                        <label class="small mb-1">Skills: *</label>
+                            {{ profile_form.skills }}
+                        <br>
+                        <label class="small mb-1">Years of Experience: *</label>
+                            {{ profile_form.years_of_experience }}
+                        <br>
+                        <label class="small mb-1">Education:</label>
+                            {{ profile_form.education }}
+                        <br>
+                        <label class="small mb-1">Username: *</label>
                             {{ user_form.username }}
-                        <label class="small mb-1">Email:</label>
-                            {{ user_form.email }}
+                        <br>
+                        <label class="small mb-1">Password: *</label>
+                            {{ user_form.password }}
                     </div>
-                    <div class="form-group">
-                        <a href="#">Change Password</a>
-                        <hr>
-                        <label class="small mb-1">Change Avatar:</label>
-                        {{ profile_form.avatar }}
-                    </div>
-                    <label class="small mb-1">Bio:</label> {{ profile_form.bio }}
                 </div>
             </div>
-            <br><br>
+            <br/>
             <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
             <button type="reset" class="btn btn-dark btn-lg">Reset</button>
         </form>
