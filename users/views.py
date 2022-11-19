@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
-from .forms import RegisterForm, LoginForm
+from django.contrib import messages
+from django.views import View
+from django.contrib.auth.decorators import login_required
+
+from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateCandidateForm
 
 
 # Create your views here.
@@ -8,9 +12,10 @@ from .forms import RegisterForm, LoginForm
 def home(request):
     return render(request, 'users/home.html')
 
+
 class RegisterView(View):
     form_class = RegisterForm
-    initial = {'key':'value'}
+    initial = {'key': 'value'}
     template_name = 'users/register.html'
 
     def get(self, request, *args, **kwargs):
@@ -30,7 +35,7 @@ class RegisterView(View):
 
         return render(request, self.template_name, {'form': form})
 
-     def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         # will redirect to the home page if a user tries to access the register page while logged in
         if request.user.is_authenticated:
             return redirect(to='/')
@@ -45,6 +50,21 @@ class CustomLoginView(LoginView):
     def form_valid(self, form):
         return super(CustomLoginView, self).form_valid(form)
 
+
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        candidate_form = UpdateCandidateForm(request.POST, request.FILES, instance=request.user.candidate)
+        print("Testing:", user_form.is_valid(), candidate_form.is_valid())
+        if user_form.is_valid() and candidate_form.is_valid():
+            user_form.save()
+            candidate_form.save()
+            print("Success!")
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='users-profile')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        candidate_form = UpdateCandidateForm(instance=request.user.candidate)
+
+    return render(request, 'users/candidate.html', {'user_form': user_form, 'profile_form': candidate_form})
