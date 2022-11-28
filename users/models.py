@@ -28,3 +28,15 @@ class Recruiter(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Posts(models.Model):
+    creator = models.ForeignKey(Recruiter, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    position_type = models.CharField(choices=[('Full Time', 'FT'), ('Part Time', 'PT')], max_length=10)
+    location = models.CharField(max_length=100)
+    skills = models.CharField(max_length=200)
+    description = models.TextField(max_length=500)
+    company = models.CharField(max_length=100)
+    expiration_date = models.DateField()
+    status = models.CharField(choices=[('Active', 'Active'), ('Inactive', 'Inactive')], max_length=10)
