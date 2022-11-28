@@ -44,3 +44,7 @@ class RecruiterRegisterView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('users-home')
+
+class CreatePost(CreateView):
+    model = Posts
+    fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
