@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -51,8 +52,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-#AUTH_USER_MODEL = 'users.User'
 
 ROOT_URLCONF = 'TinDev.urls'
 
@@ -115,3 +114,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Custome Django auth settings
+
+AUTH_USER_MODEL = 'users.User'
