@@ -10,6 +10,10 @@ from .models import User
 def home(request):
     return render(request, 'users/home.html')
 
+class LoginView(TemplateView):
+    template_name = 'users/login.html'
+    form_class = LoginForm
+
 class RegisterView(TemplateView):
     template_name = 'users/register.html'
 
