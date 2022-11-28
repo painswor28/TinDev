@@ -80,3 +80,4 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
