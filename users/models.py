@@ -30,7 +30,7 @@ class Recruiter(models.Model):
         return self.user.username
 
 
-class Posts(models.Model):
+class Post(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     position_type = models.CharField(choices=[('Full Time', 'FT'), ('Part Time', 'PT')], max_length=10)

@@ -1,11 +1,14 @@
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, TemplateView, FormView
+from django.views.generic import *
 from django.contrib.auth.views import FormView, LoginView
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from decorators import recruiter_required
 from .forms import *
 from .models import *
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -56,14 +59,43 @@ class RecruiterRegisterView(CreateView):
         login(self.request, user)
         return redirect('users-home')
 
-class CreatePost(LoginRequiredMixin, CreateView):
-    model = Posts
+@method_decorator([login_required, recruiter_required], name='dispatch')
+class ListPost(ListView):
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'users/recruiter/list_posts.html'
+
+    def get_queryset(self):
+        try:
+            queryset = Post.objects.filter(creator=self.request.user)
+        except Post.DoesNotExist:
+            queryset = []
+
+        return queryset
+
+@method_decorator([login_required, recruiter_required], name='dispatch')
+class CreatePost(CreateView):
+    model = Post
     fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
-    template_name = 'users/create_post.html'
+    template_name = 'users/recruiter/create_post.html'
 
     def form_valid(self, form):
-        form.instance.creator = self.request.user
+        post = form.save(commit=False)
+        post.creator = self.request.user
+        post.save()
         return redirect('users-home')
+
+@method_decorator([login_required, recruiter_required], name='dispatch')
+class UpdatePost(UpdateView):
+    model = Post
+    fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
+    template_name = 'users/recruiter/update_post.html'
+    success_url = reverse_lazy('list-posts')
+
+class DeletePost(DeleteView):
+    model = Post
+    template_name = 'users/recruiter/delete_post.html'
+    success_url = reverse_lazy('list-posts')
 
 
 
