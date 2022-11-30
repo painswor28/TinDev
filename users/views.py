@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView, TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import *
 from .models import User
@@ -45,6 +46,11 @@ class RecruiterRegisterView(CreateView):
         login(self.request, user)
         return redirect('users-home')
 
-class CreatePost(CreateView):
+class CreatePost(LoginRequiredMixin, CreateView):
     model = Posts
     fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
+    template_name = 'users/create_post.html'
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return redirect('users-home')
