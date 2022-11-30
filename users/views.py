@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView, TemplateView
+from django.contrib.auth.views import FormView, LoginView
 
 from .forms import *
 from .models import User
@@ -8,11 +9,17 @@ from .models import User
 # Create your views here.
 
 def home(request):
+    model = User
     return render(request, 'users/home.html')
 
-class LoginView(TemplateView):
-    template_name = 'users/login.html'
+class LoginView(LoginView):
     form_class = LoginForm
+    template_name = 'users/login.html'
+
+    def form_valid(self, form):
+        return super(LoginView, self).form_valid(form)
+
+
 
 class RegisterView(TemplateView):
     template_name = 'users/register.html'
