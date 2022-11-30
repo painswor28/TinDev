@@ -39,10 +39,4 @@ class Posts(models.Model):
     description = models.TextField(max_length=500)
     company = models.CharField(max_length=100)
     expiration_date = models.DateField()
-<<<<<<< HEAD
     status = models.BooleanField(default=True)
-
-
-=======
-    status = models.CharField(choices=[('Active', 'Active'), ('Inactive', 'Inactive')], max_length=10)
->>>>>>> main
