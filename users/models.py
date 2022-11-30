@@ -31,7 +31,7 @@ class Recruiter(models.Model):
 
 
 class Posts(models.Model):
-    creator = models.ForeignKey(Recruiter, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     position_type = models.CharField(choices=[('Full Time', 'FT'), ('Part Time', 'PT')], max_length=10)
     location = models.CharField(max_length=100)
@@ -39,4 +39,4 @@ class Posts(models.Model):
     description = models.TextField(max_length=500)
     company = models.CharField(max_length=100)
     expiration_date = models.DateField()
-    status = models.CharField(choices=[('Active', 'Active'), ('Inactive', 'Inactive')], max_length=10)
+    status = models.BooleanField(default=True)
