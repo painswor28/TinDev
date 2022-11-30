@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 
+
 class User(AbstractUser):
     is_candidate = models.BooleanField(default=False)
     is_recruiter = models.BooleanField(default=False)
+
 
 class Candidate(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -17,6 +19,7 @@ class Candidate(models.Model):
 
     def __str__(self):
         return self.user.username
+
 
 class Recruiter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -36,6 +39,10 @@ class Posts(models.Model):
     description = models.TextField(max_length=500)
     company = models.CharField(max_length=100)
     expiration_date = models.DateField()
+<<<<<<< HEAD
     status = models.BooleanField(default=True)
 
 
+=======
+    status = models.CharField(choices=[('Active', 'Active'), ('Inactive', 'Inactive')], max_length=10)
+>>>>>>> main
