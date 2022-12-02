@@ -43,8 +43,15 @@ class CandidateRegisterForm(UserCreationForm):
         return user
 
 class RecruiterRegisterForm(UserCreationForm):
+    firstname = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    lastname = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     company = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     zip_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={
+                                                             'class': 'form-control',
+                                                             }))
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -53,6 +60,8 @@ class RecruiterRegisterForm(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         user.is_recruiter = True
+        user.first_name = self.cleaned_data.get('firstname')
+        user.last_name = self.cleaned_data.get('lastname')
         user.save()
         recruiter = Recruiter.objects.create(
             user=user,

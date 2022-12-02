@@ -1,0 +1,18 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">My Posts</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">{{ post.title }}</h2>
+  <h4 class="mb-3">{{ post.type }}</h4>
+  <h4 class="mb-3">{{ post.location }}</h4>
+  <h4 class="mb-3">{{ post.skills }}</h4>
+  {{ post.description }}
+  <h4 class="mb-3">{{ post.expiration_date }}</h4>
+  <h4 class="mb-3">{{ post.status }}</h4>
+  
+  </div>
+{% endblock %}

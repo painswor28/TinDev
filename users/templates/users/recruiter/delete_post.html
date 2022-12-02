@@ -6,8 +6,8 @@
 {% block content %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'list-posts' %}">My Quizzes</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'update-post' posts.pk %}">{{ post.title }}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'list-posts' %}">My Posts</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'update-post' post.pk %}">{{ post.title }}</a></li>
       <li class="breadcrumb-item active" aria-current="page">Confirm deletion</li>
     </ol>
   </nav>

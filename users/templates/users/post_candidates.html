@@ -1,0 +1,44 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" aria-current="page">Posts</li>
+      <li class="breadcrumb-item active" aria-current="page">Interested Candidates</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">Interested Candidates</h2>
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Name</th>
+          <th>Zip Code</th>
+          <th>Skills</th>
+          <th>Github</th>
+          <th>Experience in Years</th>
+          <th>Education</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for candidate in post.interested_candidates.all %}
+          <tr>
+            <td class="align-middle"><a href="">{{ candidate.user }}</a></td>
+            <td class="align-middle">{{ candidate.user.get_full_name }}</td>
+            <td class="align-middle">{{ candidate.zip_code }}</td>
+            <td class="align-middle">{{ candidate.skills }}</td>
+            <td class="align-middle">{{ candidate.github }}</td>
+            <td class="align-middle">{{ candidate.years_of_experience }}</td>
+            <td class="align-middle">{{ candidate.education }}</td>
+            <td class="align-middle"><a href="" class="btn btn-primary mb-3" role="button">Make Offer</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="7">There are no interested candidates yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
