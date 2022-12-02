@@ -1,0 +1,27 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">My Posts</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">User Dashboard</h2>
+  <h4 class="mb-3">{{ user.get_full_name }}</h4>
+  <h4 class="mb-3">{{ user.username }}</h4>
+  {% if user.is_recruiter %}
+
+  {{user.recruiter.company}}
+  {{user.recruiter.zip_code}}
+  <a href="{% url 'list-posts'%}" class="btn btn-primary">View My Posts</a>
+
+  {% elif user.is_candidate %}
+  {{ user.candidate.profile_bio }}
+  {{ user.candidate.skills }}
+  {{ user.candidate.github }}
+  {{ user.education }}
+  <a href="" class="btn btn-primary">View My Offers</a>
+  {% endif %}
+  
+  </div>
+{% endblock %}
