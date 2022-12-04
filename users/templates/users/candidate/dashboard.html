@@ -1,0 +1,18 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">My Posts</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">Candidate Dashboard</h2>
+  <h4 class="mb-3">{{ candidate.user.get_full_name }}</h4>
+  <h4 class="mb-3">{{ candidate.user.username }}</h4>
+  {{ candidate.profile_bio }}
+  {{ candidate.skills }}
+  {{ candidate.github }}
+  {{ candidate.education }}
+  
+  </div>
+{% endblock %}

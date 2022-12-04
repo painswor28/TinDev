@@ -25,14 +25,14 @@
       <tbody>
         {% for candidate in post.interested_candidates.all %}
           <tr>
-            <td class="align-middle"><a href="">{{ candidate.user }}</a></td>
+            <td class="align-middle"><a href="{% url 'candidate-detail' candidate.user %}">{{ candidate.user }}</a></td>
             <td class="align-middle">{{ candidate.user.get_full_name }}</td>
             <td class="align-middle">{{ candidate.zip_code }}</td>
             <td class="align-middle">{{ candidate.skills }}</td>
             <td class="align-middle">{{ candidate.github }}</td>
             <td class="align-middle">{{ candidate.years_of_experience }}</td>
             <td class="align-middle">{{ candidate.education }}</td>
-            <td class="align-middle"><a href="" class="btn btn-primary mb-3" role="button">Make Offer</a></td>
+            <td class="align-middle"><a href="{% url 'make-offer' post.pk candidate.user %}" class="btn btn-primary mb-3" role="button">Make Offer</a></td>
           </tr>
         {% empty %}
           <tr>
