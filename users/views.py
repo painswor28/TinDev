@@ -5,7 +5,7 @@ from django.views.generic import *
 from django.contrib.auth.views import FormView, LoginView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from decorators import recruiter_required
+from decorators import recruiter_required, candidate_required
 from .forms import *
 from .models import *
 from django.urls import reverse_lazy
@@ -42,7 +42,6 @@ class CandidateRegisterView(CreateView):
         login(self.request, user)
         return redirect('users-home')
 
-
 class RecruiterRegisterView(CreateView):
     model = User
     form_class = RecruiterRegisterForm
@@ -57,11 +56,12 @@ class RecruiterRegisterView(CreateView):
         login(self.request, user)
         return redirect('users-home')
 
+
 @method_decorator([login_required], name='dispatch')
 class ListPost(ListView):
     model = Post
     context_object_name = 'posts'
-    template_name = 'users/list_posts.html'
+    template_name = 'users/posts/list.html'
 
     def get_queryset(self):
         user = self.request.user
@@ -80,12 +80,11 @@ class ListPost(ListView):
 
         return queryset
 
-
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class CreatePost(CreateView):
     model = Post
     fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
-    template_name = 'users/recruiter/create_post.html'
+    template_name = 'users/posts/create.html'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -95,9 +94,17 @@ class CreatePost(CreateView):
         post.save()
         return redirect('users-home')
 
+class CandidateDetail(DetailView):
+    model = Candidate
+    template_name = 'users/candidate/dashboard.html'
+
+    def get_slug_field(self):
+
+        return 'user__username'
+
 class DetailPost(DetailView):
     model = Post
-    template_name = 'users/post_detail.html'
+    template_name = 'users/posts/detail.html'
 
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class UpdatePost(UpdateView):
@@ -109,21 +116,15 @@ class UpdatePost(UpdateView):
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class DeletePost(DeleteView):
     model = Post
-    template_name = 'users/recruiter/delete_post.html'
+    template_name = 'users/posts/delete.html'
     success_url = reverse_lazy('list-posts')
 
 class InterestedCanidatesList(DetailView):
     model = Post
-    template_name = 'users/post_candidates.html'
-
-
+    template_name = 'users/posts/candidates.html'
 
 @login_required
-def DashboardView(request):
-    model = User
-    return render(request, 'users/recruiter/dashboard.html')
-
-
+@candidate_required
 def show_interest(request, pk):
     post = Post.objects.get(pk=pk)
     user = request.user
@@ -138,7 +139,72 @@ def show_interest(request, pk):
         return redirect('/posts/')
 
 
+@login_required
+def DashboardView(request):
+    model = User
+    return render(request, 'users/dashboard.html')
+
+@method_decorator([login_required], name='dispatch')
+class ListOffers(ListView):
+
+    model = Offer
+    context_object_name = 'offers'
+    template_name = 'users/offer/list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_candidate:
+            queryset = Offer.objects.filter(candidate=user.candidate)
+
+        elif user.is_recruiter:
+            queryset = Offer.objects.filter(recruiter=user.recruiter)
 
 
+        return queryset
+
+@method_decorator([login_required, recruiter_required], name='dispatch')
+class CreateOffer(CreateView):
+    model = Offer
+    fields = ['salary', 'expiration_date']
+    template_name = 'users/offer/create.html'
+
+    def form_valid(self, form):
+        offer = form.save(commit=False)
+        user = self.request.user
+        candidate_user = User.objects.get(username=self.kwargs['candidate_pk'])
+        candidate = Candidate.objects.get(user=candidate_user)
+        post = Post.objects.get(pk=self.kwargs['post_pk'])
+        offer.recruiter = user.recruiter
+        offer.candidate = candidate
+        offer.post = post
+        offer.save()
+
+        return redirect('list-posts')
+       
+    def get_context_data(self, **kwargs):
+        context = super(CreateOffer, self).get_context_data(**kwargs)
+        context['candidate_pk'] = self.kwargs['candidate_pk']
+        context['post_pk'] = self.kwargs['post_pk']
+        return context
+
+    def get_success_url(self):
+        return reverse('list-posts')
+
+@login_required
+@candidate_required
+def accept_offer(request, pk):
+
+    if Offer.objects.get(pk=pk).is_expired() is False:
+        Offer.objects.filter(pk=pk).update(accepted=True)
+    return redirect('/offers/')
+
+@login_required
+@candidate_required
+def decline_offer(request, pk):
+    
+    if not Offer.objects.get(pk=pk).is_expired():
+        Offer.objects.filter(pk=pk).update(declined=True)
+    return redirect('/offers/')
 
 

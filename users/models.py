@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
+import datetime
 
 
 class User(AbstractUser):
@@ -45,6 +46,16 @@ class Post(models.Model):
     def interested_candidates_count(self):
         return len(self.interested_candidates.all())
 
-
+class Offer(models.Model):
+    recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    salary = models.DecimalField(max_digits=10, decimal_places=2)
+    expiration_date = models.DateField()
+    accepted = models.BooleanField(default=False)
+    declined = models.BooleanField(default=False)
+    
+    def is_expired(self):
+        return self.expiration_date < datetime.date.today()
 
 
