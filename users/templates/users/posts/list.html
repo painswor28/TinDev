@@ -10,6 +10,22 @@
   <h2 class="mb-3">My Posts</h2>
   <a href="{% url 'create-post' %}" class="btn btn-primary mb-3" role="button">Add Post</a>
   <div class="card">
+    <form method="get" action="{% url 'list-posts' %}">
+      <label for='status-select'>Choose Status:</label>
+      <select value={{status}} name='status' id="status-select">
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+
+      <label for='status-select'>Choose Candidate Count:</label>
+      <select value={{candidates}} name='candidates' id="status-select">
+        <option value="False">All</option>
+        <option value="True">At Least One</option>
+      </select>
+
+      <input type="submit" name="submit" value="submit"/>
+  </form>
     <table class="table mb-0">
       <thead>
         <tr>
@@ -26,7 +42,7 @@
           <tr>
             <td class="align-middle"><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></td>
             <td class="align-middle">{{ post.company }}</td>
-            <td class="align-middle">{{ post.status }}</td>
+            <td class="align-middle">{% if post.is_expired %}Inactive{% else %}Active{% endif %}</td>
             <td class="align-middle">{{ post.position_type }}</td>
             <td class="align-middle"><a href="{% url 'interested-candidates' post.pk %}">{{ post.interested_candidates_count }}</a></td>
             <td class="text-right">
@@ -45,8 +61,28 @@
 
     {% if user.candidate %}
   <h2 class="mb-3">All Posts</h2>
-  <a href="{% url 'create-post' %}" class="btn btn-primary mb-3" role="button">Add Post</a>
   <div class="card">
+    <form method="get" action="{% url 'list-posts' %}">
+      <label for='status-select'>Choose Status:</label>
+      <select value={{status}} name='status' id="status-select">
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+
+      <label for='select-location'>Choose Location:</label>
+      
+      <input list="select-location" value={{location}} name='location'>
+      <datalist id="select-location">
+        <option value=""></option>
+        {% for post in posts %}
+        <option value={{post.location}}>{{post.location}}</option>
+        {% endfor %}
+      </datalist>
+
+      <input type="text" value={{search}} name="search">
+      <input type="submit" name="submit" value="submit"/>
+  </form>
     <table class="table mb-0">
       <thead>
         <tr>
