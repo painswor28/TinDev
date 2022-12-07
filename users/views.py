@@ -79,6 +79,28 @@ class ListPost(ListView):
                 queryset = []
 
         return queryset
+@method_decorator([login_required], name='dispatch')
+class FilterPost(ListView):
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'users/post/list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        # check if user is a candidate or a recruiter
+        if user.is_recruiter:
+            try:
+                # get queryset for that specific user
+                queryset = Post.objects.filter(creator=user)
+                
+            except Post.DoesNotExist:
+                queryset = []
+        # check if user is a candidate
+        elif user.is_candidate:
+            try:
+                queryset = Post.objects.all()
+            except Post.DoesNotExist:
+                queryset = []
 
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class CreatePost(CreateView):
