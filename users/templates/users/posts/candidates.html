@@ -1,6 +1,9 @@
 {% extends 'users/base.html' %}
-
+{% load compatibility %}
 {% block content %}
+
+
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" aria-current="page">Posts</li>
@@ -19,11 +22,14 @@
           <th>Github</th>
           <th>Experience in Years</th>
           <th>Education</th>
+          <th>Compatibility</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         {% for candidate in post.interested_candidates.all %}
+        {% with 1 as compatibility %}
+        {% with 3 as compatibility2 %}
           <tr>
             <td class="align-middle"><a href="{% url 'candidate-detail' candidate.user %}">{{ candidate.user }}</a></td>
             <td class="align-middle">{{ candidate.user.get_full_name }}</td>
@@ -32,8 +38,23 @@
             <td class="align-middle">{{ candidate.github }}</td>
             <td class="align-middle">{{ candidate.years_of_experience }}</td>
             <td class="align-middle">{{ candidate.education }}</td>
+            <td class="align-middle">{{ candidate|cpt:post }}</td>
+            <!-- {{ post.skills }}
+              {% if post.title|lower in candidate.profile_bio|lower  %}
+                {% with 100 as compatibility %}
+                {% with 100|add:compatibility as compatibility %}
+                <td class="align-middle">{{ compatibility }}</td>
+                {% endwith %}
+                {% endwith %}
+              {% else %}
+                {% with 0 as compatibility %}
+                <td class="align-middle">{{ compatibility }}</td>
+                {% endwith %}
+              {% endif %} -->
             <td class="align-middle"><a href="{% url 'make-offer' post.pk candidate.user %}" class="btn btn-primary mb-3" role="button">Make Offer</a></td>
           </tr>
+        {% endwith %}
+        {% endwith %}
         {% empty %}
           <tr>
             <td class="bg-light text-center font-italic" colspan="7">There are no interested candidates yet.</td>
