@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from decorators import recruiter_required, candidate_required
 from rest_framework import generics
+from rest_framework import filters
 import django_filters
 from .forms import *
 from .models import *
@@ -58,6 +59,21 @@ class RecruiterRegisterView(CreateView):
         login(self.request, user)
         return redirect('users-home')
 
+class RecruiterPostFilter(django_filters.FilterSet):
+    # if greater than or equal to 1, then there are interested candidates
+    interest = django_filters.BooleanFilter(name="interested_candidates")
+    # search for 'active' or "Active"
+    active = (filters.SearchFilter,)
+    search_fields = ('=status')
+    class Meta:
+        model = Post
+        fields = ['status', 'interested_candidates']
+
+class CandidatePostFilter(django_filters.FilterSet):
+    # filter by location
+    #locat
+
+    pass
 
 @method_decorator([login_required], name='dispatch')
 class ListPost(ListView):
@@ -71,6 +87,7 @@ class ListPost(ListView):
         if user.is_recruiter:
             try:
                 queryset = Post.objects.filter(creator=user)
+                filter_class = RecruiterPostFilter
             except Post.DoesNotExist:
                 queryset = []
 
@@ -81,28 +98,7 @@ class ListPost(ListView):
                 queryset = []
 
         return queryset
-@method_decorator([login_required], name='dispatch')
-class PostFilter(django_filters.FilterSet):
-    model = Post
-    context_object_name = 'posts'
-    template_name = 'users/post/list.html'
-
-    def get_queryset(self):
-        user = self.request.user
-        # check if user is a candidate or a recruiter
-        if user.is_recruiter:
-            try:
-                # get queryset for that specific user
-                queryset = Post.objects.filter(creator=user)
-                
-            except Post.DoesNotExist:
-                queryset = []
-        # check if user is a candidate
-        elif user.is_candidate:
-            try:
-                queryset = Post.objects.all()
-            except Post.DoesNotExist:
-                queryset = []
+    
 
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class CreatePost(CreateView):
