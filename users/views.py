@@ -6,6 +6,8 @@ from django.contrib.auth.views import FormView, LoginView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from decorators import recruiter_required, candidate_required
+from rest_framework import generics
+import django_filters
 from .forms import *
 from .models import *
 from django.urls import reverse_lazy
@@ -62,7 +64,7 @@ class ListPost(ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'users/posts/list.html'
-
+    filter_fields = ('status', 'location', 'title', 'description', 'interested_candidates')
     def get_queryset(self):
         user = self.request.user
 
@@ -80,7 +82,7 @@ class ListPost(ListView):
 
         return queryset
 @method_decorator([login_required], name='dispatch')
-class FilterPost(ListView):
+class PostFilter(django_filters.FilterSet):
     model = Post
     context_object_name = 'posts'
     template_name = 'users/post/list.html'
