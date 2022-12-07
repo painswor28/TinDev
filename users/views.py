@@ -9,6 +9,8 @@ from decorators import recruiter_required, candidate_required
 from .forms import *
 from .models import *
 from django.urls import reverse_lazy
+import datetime
+from django.db.models import Count
 
 # Create your views here.
 
@@ -87,29 +89,68 @@ class ListPost(ListView):
     # using the posts template
     template_name = 'users/posts/list.html'
     def get_queryset(self):
+
         user = self.request.user
+
+        status_val = self.request.GET.get('status', 'All')
+        candidate_val = self.request.GET.get('candidates', 'False')
+        search = self.request.GET.get('search', 'search')
+        location = self.request.GET.get('location', 'location')
 
         if user.is_recruiter:
             try:
                 queryset = Post.objects.filter(creator=user)
+                if status_val == 'inactive':
+                    queryset = Post.objects.filter(expiration_date__lt=datetime.date.today())
+
+                elif status_val == 'active':
+                    queryset = Post.objects.filter(expiration_date__gte=datetime.date.today())
+
+                if candidate_val == 'True':
+                    queryset = Post.objects.annotate(num_candidates=Count('interested_candidates')).filter(num_candidates__gte=1)
+
             except Post.DoesNotExist:
                 queryset = []
 
         elif user.is_candidate:
             try:
                 queryset = Post.objects.all()
+                if status_val == 'inactive':
+                    queryset = Post.objects.filter(expiration_date__lt=datetime.date.today())
+
+                elif status_val == 'active':
+                    queryset = Post.objects.filter(expiration_date__gte=datetime.date.today())
+
+                if location != 'location':
+                    queryset = Post.objects.filter(location=location)
+
+                if search != 'search':
+                    queryset = Post.objects.filter(description__contains=search)
+
+                
             except Post.DoesNotExist:
                 queryset = []
 
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(ListPost, self).get_context_data(**kwargs)
+        context['status'] = self.request.GET.get('status' , 'All')
+        context['candidates'] = self.request.GET.get('candidates', 'False')
+        context['search'] = self.request.GET.get('search','search')
+        context['location'] = self.request.GET.get('location', 'location')
+
+        return context
 
 # view for creating post - login is required and you must be a recruiter to create - else, go to dispatch
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class CreatePost(CreateView):
     # model is Post
     model = Post
+    
     # fields of importance listed
-    fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
+    fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date']
+
     # using posts/create template
     template_name = 'users/posts/create.html'
     # determine validity of form 

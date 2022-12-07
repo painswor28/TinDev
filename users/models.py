@@ -40,11 +40,13 @@ class Post(models.Model):
     description = models.TextField(max_length=500)
     company = models.CharField(max_length=100)
     expiration_date = models.DateField()
-    status = models.CharField(choices = (("Active", "active"), ("Inactive", "Inactive")), max_length=20)
     interested_candidates = models.ManyToManyField(Candidate, blank=True)
 
     def interested_candidates_count(self):
         return len(self.interested_candidates.all())
+
+    def is_expired(self):
+        return self.expiration_date < datetime.date.today()
 
 class Offer(models.Model):
     recruiter = models.ForeignKey(Recruiter, on_delete=models.CASCADE)
