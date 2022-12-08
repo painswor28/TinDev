@@ -110,7 +110,7 @@ class DetailPost(DetailView):
 class UpdatePost(UpdateView):
     model = Post
     fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
-    template_name = 'users/recruiter/update_post.html'
+    template_name = 'users/posts/update.html'
     success_url = reverse_lazy('list-posts')
 
 @method_decorator([login_required, recruiter_required], name='dispatch')

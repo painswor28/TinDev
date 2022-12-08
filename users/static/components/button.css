@@ -1,0 +1,17 @@
+.btn-custom-primary {
+    outline: none;
+    color: white;
+    background-color: #ef3a76;
+    border: none;
+    transition: box-shadow 250ms, background-color 250ms;
+}
+
+.btn-custom-primary:hover {
+    color: white;
+    background-color: #ef3a76;
+    box-shadow: 0 0 10px #ef3a76;
+}
+.btn-custom-primary:active {
+    background-color: #f30e5a;
+    box-shadow: 0 0 15px #f30e5a;
+}

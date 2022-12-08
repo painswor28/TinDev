@@ -1,8 +1,26 @@
-{% extends 'users/base.html' %}
-
+{% extends "users/base.html" %}
+{% block title %} Sign Up {% endblock title%}
 {% block content %}
-  <h2>Sign up for a free account</h2>
-  <p class="lead">Select below the type of account you want to create</p>
-  <a href="{% url 'register-candidate' %}" class="btn btn-student btn-lg" role="button">I'm a candidate</a>
-  <a href="{% url 'register-recruiter' %}" class="btn btn-teacher btn-lg" role="button">I'm a recruiter</a>
-{% endblock %} 
+
+  <div class="d-flex-col-c vh-container">
+    <div class="card">
+      <div class="card-body d-flex-col-c text-center gap-20 p-5">
+        <h2 class="fw-100"><span class="fw-700">Sign Up</span> for a Free Account</h2>
+        <div class="w-100 thin line"></div>
+        <p class="lead">Select the type of account you want to create below</p>
+
+        <div class="home-option-display">
+          <a href="{% url 'register-candidate' %}"><div class="home-option">
+            <h3>Candidate &rarr;</h3>
+            <p>I'm a student actively searching for a job</p>
+          </div></a>
+          <a href="{% url 'register-recruiter' %}"><div class="home-option">
+            <h3>Recruiter &rarr;</h3>
+            <p>I'm a recruiter actively looking to hire students</p>
+          </div></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

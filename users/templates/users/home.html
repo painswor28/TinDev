@@ -1,22 +1,43 @@
 {% extends "users/base.html" %}
 {% block title %} Home Page {% endblock title%}
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-4">Welcome to <b>TinDev</b></h1>
-        <br/>
-        <p class="lead">
-            At its core, <b>TinDev</b> is meant to disrupt and innovate the recruiting process. It aims to facilitate the process of finding
-            the perfect match for a technical position, whether it is a Software Engineering, Quality Engineering, or Full Stack Developer positions.
-        </p>
-
-        <hr class="my-4">
-        <p class="lead">
-            {% if user.is_authenticated %}
-            <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
+    <div class="vh-container w-100 d-flex-row-c">
+        <div class="d-flex-col-l mr-5">
+            {% if not user.is_authenticated %}
+            <h1 class="display-4 fw-100">Welcome to <span class="fw-700">TinDev</span></h1><br>
             {% else %}
-            <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign in</a>
+            <h1 class="display-5 fw-100">Hi {{ user.get_short_name }},</h1>
+            <h1 class="display-4 fw-100">Welcome back to <span class="fw-700">TinDev</span></h1><br>
             {% endif %}
-        </p>
+            <p class="lead as-c">
+                At its core, <span class="fw-700">TinDev</span> is meant to disrupt and innovate the recruiting process. It aims to facilitate the process of finding
+                the perfect match for a technical position, whether it is a Software Engineering, Quality Engineering, or Full Stack Developer positions.
+            </p>
+
+            {% if user.is_authenticated %}
+            <div class="home-option-display as-fs my-5">
+                <a href="/dashboard"><div class="home-option">
+                    <h2>Profile &rarr;</h2>
+                    <p>View and edit your profile page!</p>
+                </div></a>
+                <a href="/posts"><div class="home-option">
+                    <h2>Posts &rarr;</h2>
+                    <p>Search and interact with posts by recruiters!</p>
+                </div></a>
+            </div>
+            {% endif %}
+
+            <p class="lead">
+                {% if not user.is_authenticated %}
+                <a class="btn-custom-primary btn btn-lg my-5" href="{% url 'login' %}" role="button">Sign in</a>
+                {% endif %}
+            </p>
+        </div>
+        <div class="vertical-line">
+        </div>
+        <div class="vh-container d-flex-row-c">
+            <img src="../../static/media/TinDev-trans.png" alt="" class="home-logo">
+        </div>
     </div>
 
 {% endblock content %}

@@ -43,10 +43,10 @@
             <td class="align-middle"><a href="" class="btn btn-secondary mb-3" role="button">Expired</a></td>
             {% else %}
               {% if user.is_candidate %}
-              <td class="align-middle"><a href="{% url 'accept-offer' offer.pk %}" class="btn btn-primary mb-3" role="button">Accept Offer</a></td>
+              <td class="align-middle"><a href="{% url 'accept-offer' offer.pk %}" class="btn mb-3" role="button">Accept Offer</a></td>
               <td class="align-middle"><a href="{% url 'decline-offer' offer.pk %}" class="btn btn-warning mb-3" role="button">Decline Offer</a></td>
               {% elif user.is_recruiter %}
-              <td class="align-middle"><a href="" class="btn btn-primary mb-3" role="button">Awaiting</a></td>
+              <td class="align-middle"><a href="" class="btn mb-3" role="button">Awaiting</a></td>
               {% endif %}
             {% endif %}
           </tr>

@@ -13,8 +13,8 @@
 
   {{user.recruiter.company}}
   {{user.recruiter.zip_code}}
-  <a href="{% url 'list-posts'%}" class="btn btn-primary">View My Posts</a>
-  <a href="{% url 'list-offers' %}" class="btn btn-primary">View My Offers</a>
+  <a href="{% url 'list-posts'%}" class="btn btn-custom-primary">View My Posts</a>
+  <a href="{% url 'list-offers' %}" class="btn btn-custom-primary">View My Offers</a>
 
 
   {% elif user.is_candidate %}
@@ -22,7 +22,7 @@
   {{ user.candidate.skills }}
   {{ user.candidate.github }}
   {{ user.education }}
-  <a href="{% url 'list-offers' %}" class="btn btn-primary">View My Offers</a>
+  <a href="{% url 'list-offers' %}" class="btn btn-custom-primary">View My Offers</a>
   {% endif %}
   
   </div>
