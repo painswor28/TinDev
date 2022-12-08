@@ -1,12 +1,14 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<nav aria-label="breadcrumb">
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item" aria-current="page">Posts</li>
+      <li class="breadcrumb-item" aria-current="page"><a href="{% url 'list-posts' %}">Posts</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></li>
       <li class="breadcrumb-item active" aria-current="page">Interested Candidates</li>
     </ol>
   </nav>
+
   <h2 class="mb-3">Interested Candidates</h2>
   <div class="card">
     <table class="table mb-0">

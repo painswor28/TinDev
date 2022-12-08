@@ -30,8 +30,10 @@
             <td class="align-middle">{{ post.position_type }}</td>
             <td class="align-middle"><a href="{% url 'interested-candidates' post.pk %}">{{ post.interested_candidates_count }}</a></td>
             <td class="text-right">
-              <a href="{% url 'update-post' post.pk %}" class="btn btn-custom-primary">Update details</a>
-              <a href="{% url 'delete-post' post.pk %}" class="btn btn-secondary" role="button">Delete Post</a>
+              <div class="d-flex gap-10 jc-fe f-wrap">
+                <a href="{% url 'update-post' post.pk %}" class="btn btn-custom-primary">Update details</a>
+                <a href="{% url 'delete-post' post.pk %}" class="btn btn-secondary" role="button">Delete Post</a>
+              </div>
             </td>
           </tr>
         {% empty %}
@@ -63,9 +65,9 @@
             <td class="align-middle">{{ post.location }}</td>
             <td class="text-right">
               {% if user.candidate in post.interested_candidates.all %}
-              <a href="{% url 'show-interest' post.pk %}" class="btn btn-custom-primary">I'm Interested!</a>
+              <a href="{% url 'show-interest' post.pk %}" class="btn btn-custom-primary">Applied</a>
               {% else %}
-              <a href="{% url 'show-interest' post.pk %}" class="btn btn-secondary">Not Interested</a>
+              <a href="{% url 'show-interest' post.pk %}" class="btn btn-secondary">Not Applied</a>
               {% endif %}
             </td>
           </tr>

@@ -3,15 +3,21 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-8 col-sm-10 col-12">
-        <h2>Make an offer</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'list-posts' %}">Posts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Make an Offer</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex-col-l gap-10">
+        <h2 class="td-pink">Make an offer</h2>
+        <div class="thin line"></div>
         <form method="post" novalidate>
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}">
             {{ form|crispy }}
-            <button type="submit" class="btn btn-success">Make Offer</button>
+            <button type="submit" class="btn btn-custom-primary my-4">Make Offer</button>
         </form>
-        </div>
     </div>
 {% endblock %}
