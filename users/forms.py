@@ -90,3 +90,5 @@ class LoginForm(AuthenticationForm):
         model = User
         fields = ['username', 'password']
 
+class FilterForm(forms.Form):
+    active = forms.BooleanField(required=False)
