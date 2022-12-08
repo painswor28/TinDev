@@ -121,10 +121,10 @@ class ListPost(ListView):
                 elif status_val == 'active':
                     queryset = Post.objects.filter(expiration_date__gte=datetime.date.today())
 
-                if location != 'location':
-                    queryset = Post.objects.filter(location=location)
+                if location != 'all':
+                    queryset = Post.objects.filter(location__contains=location)
 
-                if search != 'search':
+                if search != '':
                     queryset = Post.objects.filter(description__contains=search)
 
                 
