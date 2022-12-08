@@ -34,7 +34,7 @@ class CandidateRegisterView(CreateView):
     template_name = 'users/register_form.html'
 
     def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'candidate'
+        kwargs['user_type'] = 'Candidate'
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
@@ -48,7 +48,7 @@ class RecruiterRegisterView(CreateView):
     template_name = 'users/register_form.html'
 
     def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'recruiter'
+        kwargs['user_type'] = 'Recruiter'
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
