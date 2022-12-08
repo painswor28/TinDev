@@ -1,16 +1,5 @@
 :root {
     --td-pink: #ef3a76;
-    --sb-red: #98111e;
-    --sb-black: #564e58;
-    --sb-dark-blue: #0b2141;
-    --sb-light-blue: #6494aa;
-    --sb-blue: #4b7080;
-    --sb-tan: #ffb07b;
-    --sb-yellow: #c99601;
-    --sb-orange: #e24e1b;
-    --sb-white: #f2efe9;
-    --border-color: #cbcbcb;
-    --sb-warning-bg: #ffb9c0;
     --border-radius: 5px;
     --header-height: 50px;
     --loudness-width: 0;
@@ -32,36 +21,6 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.dark-mode {
-    --inverted-bg-solid: var(--sb-white);
-    --inverted-bg-transparent: rgba(242, 239, 233, .8);
-    --inverted-text-color: var(--sb-dark-blue);
-    --reg-text-color: var(--sb-white);
-    --reg-bg-solid: var(--sb-dark-blue);
-    --reg-bg-rec-trans: rgba(242, 239, 233, 0.7);
-    --reg-bg-transparent: rgba(11, 33, 65, 0.4);
-    --reg-bg-transparent-dark: rgba(11, 33, 65, .8);
-    --icon-filter: invert(100%) sepia(2%) saturate(5756%) hue-rotate(298deg) brightness(103%) contrast(89%);
-    --inverted-filter: invert(10%) sepia(34%) saturate(2988%) hue-rotate(194deg) brightness(88%) contrast(96%);
-    background-color: var(--sb-dark-blue);
-    color: var(--sb-white);
-}
-
-.light-mode {
-    --inverted-bg-solid: var(--sb-light-blue);
-    --inverted-bg-transparent: rgba(11, 33, 65, .75);
-    --inverted-text-color: var(--sb-white);
-    --reg-text-color: var(--sb-light-blue);
-    --reg-bg-solid: var(--sb-white);
-    --reg-bg-rec-trans: rgba(11, 33, 65, .8);
-    --reg-bg-transparent: rgba(242, 239, 233, 0.6);
-    --reg-bg-transparent-dark: rgba(242, 239, 233, .9);
-    --icon-filter: invert(39%) sepia(27%) saturate(540%) hue-rotate(153deg) brightness(96%) contrast(86%);
-    --inverted-filter: invert(100%) sepia(2%) saturate(5756%) hue-rotate(298deg) brightness(103%) contrast(89%);
-    background-color: var(--sb-white);
-    color: var(--sb-blue);
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -89,19 +48,6 @@ a:link { text-decoration: none; }
 .italic {font-style: italic}
 .clickable {cursor: pointer}
 
-h1.title {
-    font-size: 3em;
-    font-weight: 300;
-}
-
-.no-select {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-}
 
 /* Flexbox Classes */
 
@@ -150,22 +96,6 @@ h1.title {
     flex-direction: column;
 }
 
-.f-responsive-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-/* Grid Classes */
-
-.d-grid {display: grid;}
-.grid-col-12 {grid-template-columns: repeat(12, 1fr);}
-.grid-4 {grid-column: span 4;}
-.grid-6 {grid-column: span 6;}
-.grid-8 {grid-column: span 8;}
-.grid-12 {grid-column: span 12;}
-
 /* Line Classes */
 
 .line {
@@ -180,24 +110,7 @@ h1.title {
 .w-100 {width: 100% !important;}
 
 /* Colors */
-
-.inverted {background-color: var(--reg-bg-solid);}
-.black {background-color: black !important;}
-.yellow {background-color: var(--sb-yellow) !important;}
-.light-blue {background-color: var(--sb-light-blue) !important;}
-.red {color: #ff4444}
-.green {color: #40f140}
 .td-pink {color: var(--td-pink)}
-
-.fs-buffer {
-    height: 100vh;
-    width: 80%;
-}
-
-.fill {
-    width: 100%;
-    height: 100%;
-}
 
 @font-face {
     font-family: Outfit;
@@ -205,12 +118,3 @@ h1.title {
     src: url("../fonts/Outfit/Outfit-VariableFont_wght.ttf") format("truetype");
 }
 
-@font-face {
-    font-family: Yellowtail;
-    src: url("../fonts/Yellowtail/Yellowtail-Regular.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: College;
-    src: url("../fonts/College/college.ttf") format("truetype");
-}
