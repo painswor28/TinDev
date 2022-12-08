@@ -2,14 +2,14 @@
 {% load compatibility %}
 {% block content %}
 
-
-
-<nav aria-label="breadcrumb">
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item" aria-current="page">Posts</li>
+      <li class="breadcrumb-item" aria-current="page"><a href="{% url 'list-posts' %}">Posts</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></li>
       <li class="breadcrumb-item active" aria-current="page">Interested Candidates</li>
     </ol>
   </nav>
+
   <h2 class="mb-3">Interested Candidates</h2>
   <div class="card">
     <table class="table mb-0">
@@ -51,7 +51,7 @@
                 <td class="align-middle">{{ compatibility }}</td>
                 {% endwith %}
               {% endif %} -->
-            <td class="align-middle"><a href="{% url 'make-offer' post.pk candidate.user %}" class="btn btn-primary mb-3" role="button">Make Offer</a></td>
+            <td class="align-middle"><a href="{% url 'make-offer' post.pk candidate.user %}" class="btn btn-custom-primary mb-3" role="button">Make Offer</a></td>
           </tr>
         {% endwith %}
         {% endwith %}

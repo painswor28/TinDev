@@ -1,17 +1,26 @@
 {% extends 'users/base.html' %}
+{% block title %} Update Post {% endblock title%}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-8 col-sm-10 col-12">
-        <h2>Create a new job post</h2>
-        <form method="post" novalidate>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'list-posts' %}">Posts</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Post</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex-col-l gap-10">
+        <h2 class="td-pink">Update {{ post.title }}</h2>
+        <div class="thin line"></div>
+
+        <form method="post" class=" ml-4" novalidate>
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}">
             {{ form|crispy }}
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="submit" class="btn btn-custom-primary my-4">Update</button>
         </form>
-        </div>
     </div>
 {% endblock %}

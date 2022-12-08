@@ -45,7 +45,7 @@ class CandidateRegisterView(CreateView):
     # specify the context data is specific to candidate and not recruiter
     def get_context_data(self, **kwargs):
         # method is used to populate dictionary object for template context
-        kwargs['user_type'] = 'candidate'
+        kwargs['user_type'] = 'Candidate'
         return super().get_context_data(**kwargs)
     # save user form 
     def form_valid(self, form):
@@ -67,7 +67,7 @@ class RecruiterRegisterView(CreateView):
     # populate dict for template variables
     def get_context_data(self, **kwargs):
         # set user type to recruter, specifying that is the type
-        kwargs['user_type'] = 'recruiter'
+        kwargs['user_type'] = 'Recruiter'
         # return and populate object
         return super().get_context_data(**kwargs)
     # save form 
@@ -190,8 +190,7 @@ class UpdatePost(UpdateView):
     model = Post
     # fields listed below
     fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
-    # use specific update_post template
-    template_name = 'users/recruiter/update_post.html'
+    template_name = 'users/posts/update.html'
     # for HTTP redirects and the accessing of url details from urls.py
     success_url = reverse_lazy('list-posts')
 
