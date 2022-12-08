@@ -189,7 +189,7 @@ class UpdatePost(UpdateView):
     # model is Post
     model = Post
     # fields listed below
-    fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date', 'status']
+    fields = ['title', 'position_type', 'location', 'skills', 'description', 'expiration_date']
     template_name = 'users/posts/update.html'
     # for HTTP redirects and the accessing of url details from urls.py
     success_url = reverse_lazy('list-posts')

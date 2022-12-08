@@ -17,7 +17,7 @@
     <p><span class="fw-500">Location: </span>{{ post.location }}</p>
     <p><span class="fw-500">Skills Required: </span>{{ post.skills }}</p>
     <p><span class="fw-500">Expiration Date: </span>{{ post.expiration_date }}</p>
-    <p><span class="fw-500">Status: </span>{{ post.status }}</p>
+    <p><span class="fw-500">Status: </span>{% if post.is_expired %}Inactive{% else %}Active{% endif %}</p>
     <p><span class="fw-500">Description: </span>{{ post.description }}</p>
 
     {% if user.is_recruiter %}

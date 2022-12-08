@@ -3,16 +3,33 @@
 {% block content %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page">My Posts</li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'list-offers' %}">Offers</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Candidate "{{candidate.user}}"</li>
     </ol>
   </nav>
-  <h2 class="mb-3">Candidate Dashboard</h2>
-  <h4 class="mb-3">{{ candidate.user.get_full_name }}</h4>
-  <h4 class="mb-3">{{ candidate.user.username }}</h4>
-  {{ candidate.profile_bio }}
-  {{ candidate.skills }}
-  {{ candidate.github }}
-  {{ candidate.education }}
-  
+  <div class="dashboard-display d-flex-col-l gap-20">
+    <h2>Candidate</h2>
+
+    <div class="d-flex-col-l gap-10">
+      <div class="thin line"></div>
+      <h3 class="td-pink">Personal Information</h3>
+      <p><span class="fw-500">Full Name: </span>{{ candidate.user.get_full_name }}</p>
+      <p><span class="fw-500">Username: </span>{{ candidate.user }}</p>
+    </div>
+    <div class="d-flex-col-l gap-10">
+      <div class="thin line"></div>
+      <h3 class="td-pink">Candidate Information</h3>
+      <p><span class="fw-500">Biography: </span>{{ candidate.profile_bio }}</p>
+      <p><span class="fw-500">Zip Code: </span>{{ candidate.zip_code }}</p>
+      <p><span class="fw-500">Skills: </span>{{ candidate.skills }}</p>
+      {% if candidate.years_of_experience == 1 %}
+      <p><span class="fw-500">Experience: </span>{{ candidate.years_of_experience }} year</p>
+      {% else %}
+      <p><span class="fw-500">Experience: </span>{{ candidate.years_of_experience }} years</p>
+      {% endif %}
+      <p><span class="fw-500">GitHub: </span>{{ candidate.github }}</p>
+      <p><span class="fw-500">Education: </span>{{ candidate.education }}</p>
+    </div>
   </div>
+  
 {% endblock %}

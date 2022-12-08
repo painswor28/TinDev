@@ -8,7 +8,7 @@
     </ol>
   </nav>
 
-  <div class="dashboard-display d-flex-col-l gap-40">
+  <div class="dashboard-display d-flex-col-l gap-20">
     <h2>My Profile</h2>
 
     <div class="d-flex-col-l gap-10">
@@ -27,7 +27,7 @@
       <p><span class="fw-500">Zip Code: </span>{{ user.recruiter.zip_code }}</p>
     </div>
 
-    <div class="d-flex gap-10">
+    <div class="d-flex gap-10 my-4">
       <a href="{% url 'list-posts'%}" class="btn btn-custom-primary">View My Posts</a>
       <a href="{% url 'list-offers' %}" class="btn btn-custom-primary">View My Offers</a>
     </div>
@@ -49,7 +49,7 @@
       <p><span class="fw-500">Education: </span>{{ user.candidate.education }}</p>
     </div>
 
-    <a href="{% url 'list-offers' %}" class="btn btn-custom-primary">View My Offers</a>
+    <a href="{% url 'list-offers' %}" class="btn btn-custom-primary my-4">View My Offers</a>
 
     {% endif %}
   </div>
