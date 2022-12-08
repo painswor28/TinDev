@@ -94,8 +94,8 @@ class ListPost(ListView):
 
         status_val = self.request.GET.get('status', 'All')
         candidate_val = self.request.GET.get('candidates', 'False')
-        search = self.request.GET.get('search', 'search')
-        location = self.request.GET.get('location', 'location')
+        search = self.request.GET.get('search', '')
+        location = self.request.GET.get('location', 'all')
 
         if user.is_recruiter:
             try:
@@ -124,9 +124,8 @@ class ListPost(ListView):
                 if location != 'all':
                     queryset = Post.objects.filter(location__contains=location)
 
-                if search != '':
+                if search:
                     queryset = Post.objects.filter(description__contains=search)
-
                 
             except Post.DoesNotExist:
                 queryset = []
@@ -135,10 +134,10 @@ class ListPost(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ListPost, self).get_context_data(**kwargs)
-        context['status'] = self.request.GET.get('status' , 'All')
+        context['status'] = self.request.GET.get('status', 'All')
         context['candidates'] = self.request.GET.get('candidates', 'False')
-        context['search'] = self.request.GET.get('search','search')
-        context['location'] = self.request.GET.get('location', 'location')
+        context['search'] = self.request.GET.get('search', '')
+        context['location'] = self.request.GET.get('location', 'all')
 
         return context
 
