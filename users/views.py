@@ -94,7 +94,7 @@ class ListPost(ListView):
 
         status_val = self.request.GET.get('status', 'All')
         candidate_val = self.request.GET.get('candidates', 'False')
-        search = self.request.GET.get('search', 'search')
+        search = self.request.GET.get('search', '')
         location = self.request.GET.get('location', 'location')
 
         if user.is_recruiter:
@@ -137,7 +137,7 @@ class ListPost(ListView):
         context = super(ListPost, self).get_context_data(**kwargs)
         context['status'] = self.request.GET.get('status' , 'All')
         context['candidates'] = self.request.GET.get('candidates', 'False')
-        context['search'] = self.request.GET.get('search','search')
+        context['search'] = self.request.GET.get('search','')
         context['location'] = self.request.GET.get('location', 'location')
 
         return context
